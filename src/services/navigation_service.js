@@ -19,32 +19,9 @@ const NAVIGATION_SERVICE_COMMANDS = {
  * @param {Array} service.args
  */
 async function navigation_service({ command, args }) {
-  if (!is_arguments_valid({ command, args })) {
-    console.log("Invalid input: incorrect number of arguments");
-
-    return;
-  }
-
   const util = NAVIGATION_SERVICE_COMMANDS[command];
 
   await util(args);
-}
-
-//todo add it to controller scope
-function is_arguments_valid({ command, args }) {
-  switch (command) {
-    case "up": {
-      return args.length === 0;
-    }
-    case "ls": {
-      return args.length === 0;
-    }
-    case "cd": {
-      return args.length === 1;
-    }
-  }
-
-  return false;
 }
 
 function get_current_dir() {
@@ -66,6 +43,10 @@ function go_up() {
   }
 }
 
+/**
+ * 
+ * @param {Array<string>} args 
+ */
 async function go_to_dir(args) {
   try {
     const [user_path] = args;
