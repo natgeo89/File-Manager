@@ -1,23 +1,27 @@
-import * as readline from 'node:readline/promises';
-import { stdin as input, stdout as output } from 'node:process';
+import * as readline from "node:readline/promises";
+import { stdin as input, stdout as output } from "node:process";
 
 import { controller } from "./controller.js";
-import { getUserName } from './utils.js';
+import { getUserName } from "./utils.js";
+import { get_current_dir } from "./services/navigation_service.js";
 
 const rl = readline.createInterface({ input, output });
 
 function greetings() {
   console.log(`Welcome to the File Manager, ${getUserName()}!`);
+  console.log(`You are currently in ${get_current_dir()}`);
 
   rl.prompt();
 }
 
 function registerEvents() {
-  rl.on("line", (command) => {
+  rl.on("line", async (command) => {
     if (command === ".exit") {
       rl.emit("SIGINT");
     } else {
-      controller(command)
+      await controller(command);
+
+      console.log(`You are currently in ${get_current_dir()}`);
 
       rl.prompt();
     }
@@ -34,5 +38,3 @@ function registerEvents() {
 
 registerEvents();
 greetings();
-
-

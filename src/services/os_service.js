@@ -1,4 +1,4 @@
-import { EOL, cpus, homedir, userInfo, arch } from "os";
+import { EOL, cpus, homedir, userInfo, arch } from "node:os";
 
 const OS_SERVICE_COMMANDS = {
   "--EOL": JSON.stringify(EOL),
@@ -9,20 +9,20 @@ const OS_SERVICE_COMMANDS = {
 };
 
 /**
- * @param {Array} args
+ * @param {Object} service
+ * @param {string} service.command
+ * @param {Array<string>} service.args
  */
-function os_service(args) {
+function os_service({ args }) {
   if (args.length === 0 || args.length > 1) {
     console.log("Invalid input: incorrect number of arguments");
   } else {
     const [firstArgument] = args;
-    const command = OS_SERVICE_COMMANDS[firstArgument];
+    const result =
+      OS_SERVICE_COMMANDS[firstArgument] ??
+      `Invalid input: incorrect argument ${firstArgument}`;
 
-    if (command === undefined) {
-      console.log(`Invalid input: incorrect argument ${firstArgument}`);
-    }
-
-    console.log(command);
+    console.log(result);
   }
 }
 

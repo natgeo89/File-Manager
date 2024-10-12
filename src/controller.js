@@ -1,9 +1,10 @@
-import {os_service} from "./services/os_service.js";
+import { os_service } from "./services/os_service.js";
+import { navigation_service } from "./services/navigation_service.js";
 
 const COMMANDS = {
-  up: "up",
-  cd: "cd",
-  ls: "ls",
+  up: navigation_service,
+  cd: navigation_service,
+  ls: navigation_service,
   cat: "cat",
   add: "add",
   rn: "rn",
@@ -16,21 +17,25 @@ const COMMANDS = {
   decompress: "decompress",
 };
 
-function controller(command) {
+/**
+ * 
+ * @param {string} command 
+ */
+async function controller(command) {
   try {
-    const [cmd, ...rowArgs] = command.trim().split(" ");
+    const [cmd, ...userArgs] = command.trim().split(" ");
 
-    const args = rowArgs.filter((arg) => arg !== "");
+    const formattedArgs = userArgs.filter((arg) => arg !== "");
 
     const service = COMMANDS[cmd];
 
     if (service === undefined) {
-      console.log("Invalid input");
+      console.log(`Invalid input: incorrect command ${cmd}`);
     } else {
-      service(args)
+      await service({ command: cmd, args: formattedArgs });
     }
   } catch (error) {
-    console.log("Error on command occur", error);
+    console.log("Operation failed");
   }
 }
 
