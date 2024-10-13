@@ -1,0 +1,20 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/file_manager.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natgeo89/File-Manager.git"
+  },
+  "author": "Viktar Sakharuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natgeo89/File-Manager/issues"
+  },
+  "homepage": "https://github.com/natgeo89/File-Manager#readme"
+}
