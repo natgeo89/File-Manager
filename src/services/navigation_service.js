@@ -1,6 +1,7 @@
 import { homedir } from "node:os";
 import path from "node:path";
 import fs from "node:fs/promises";
+import { COMMANDS } from "../constants.js";
 
 let CURRENT_DIRECTORY = homedir();
 //todo remove commented
@@ -8,9 +9,9 @@ let CURRENT_DIRECTORY = homedir();
 
 
 const NAVIGATION_SERVICE_COMMANDS = {
-  up: go_up,
-  cd: go_to_dir,
-  ls: get_list_of_files,
+  [COMMANDS.up]: go_up,
+  [COMMANDS.cd]: go_to_dir,
+  [COMMANDS.ls]: get_list_of_files,
 };
 
 /**

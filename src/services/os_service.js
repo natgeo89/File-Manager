@@ -14,16 +14,12 @@ const OS_SERVICE_COMMANDS = {
  * @param {Array<string>} service.args
  */
 function os_service({ args }) {
-  if (args.length === 0 || args.length > 1) {
-    console.log("Invalid input: incorrect number of arguments");
-  } else {
-    const [firstArgument] = args;
-    const result =
-      OS_SERVICE_COMMANDS[firstArgument] ??
-      `Invalid input: incorrect argument ${firstArgument}`;
+  const [firstArgument] = args;
+  const result =
+    OS_SERVICE_COMMANDS[firstArgument] ??
+    `Invalid input: incorrect argument ${firstArgument}`;
 
-    console.log(result);
-  }
+  console.log(result);
 }
 
 function get_cpus() {

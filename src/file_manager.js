@@ -4,6 +4,8 @@ import { stdin as input, stdout as output } from "node:process";
 import { controller } from "./controller.js";
 import { getUserName } from "./utils.js";
 import { get_current_dir } from "./services/navigation_service.js";
+import { COMMANDS } from "./constants.js";
+
 
 const rl = readline.createInterface({ input, output });
 
@@ -16,7 +18,7 @@ function greetings() {
 
 function registerEvents() {
   rl.on("line", async (command) => {
-    if (command === ".exit") {
+    if (command === COMMANDS.exit) {
       rl.emit("SIGINT");
     } else {
       await controller(command);

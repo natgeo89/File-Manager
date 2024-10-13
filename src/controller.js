@@ -1,36 +1,21 @@
 import { os_service } from "./services/os_service.js";
 import { navigation_service } from "./services/navigation_service.js";
+import { ARGS_CORRECT_NUMBER, COMMANDS } from "./constants.js";
 
 const SERVICES = {
-  up: navigation_service,
-  cd: navigation_service,
-  ls: navigation_service,
-  cat: "cat",
-  add: "add",
-  rn: "rn",
-  cp: "cp",
-  mv: "mv",
-  rm: "rm",
-  os: os_service,
-  hash: "hash",
-  compress: "compress",
-  decompress: "decompress",
-};
-
-const ARGS_CORRECT_NUMBER = {
-  up: 0,
-  ls: 0,
-  cd: 1,
-  cat: 1,
-  add: 1,
-  rm: 1,
-  os: 1,
-  hash: 1,
-  rn: 2,
-  cp: 2,
-  mv: 2,
-  compress: 2,
-  decompress: 2,
+  [COMMANDS.up]: navigation_service,
+  [COMMANDS.cd]: navigation_service,
+  [COMMANDS.ls]: navigation_service,
+  [COMMANDS.cat]: "cat",
+  [COMMANDS.add]: "add",
+  [COMMANDS.rn]: "rn",
+  [COMMANDS.cp]: "cp",
+  [COMMANDS.mv]: "mv",
+  [COMMANDS.rm]: "rm",
+  [COMMANDS.os]: os_service,
+  [COMMANDS.hash]: "hash",
+  [COMMANDS.compress]: "compress",
+  [COMMANDS.decompress]: "decompress",
 };
 
 /**
