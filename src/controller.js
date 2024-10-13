@@ -2,6 +2,7 @@ import { os_service } from "./services/os_service.js";
 import { navigation_service } from "./services/navigation_service.js";
 import { fs_service } from "./services/fs_service.js";
 import { ARGS_CORRECT_NUMBER, COMMANDS } from "./constants.js";
+import { hash_service } from "./services/hash_service.js";
 
 const SERVICES = {
   [COMMANDS.up]: navigation_service,
@@ -14,7 +15,7 @@ const SERVICES = {
   [COMMANDS.mv]: fs_service,
   [COMMANDS.rm]: fs_service,
   [COMMANDS.os]: os_service,
-  [COMMANDS.hash]: "hash",
+  [COMMANDS.hash]: hash_service,
   [COMMANDS.compress]: "compress",
   [COMMANDS.decompress]: "decompress",
   [COMMANDS.exit]: "exit",
@@ -40,9 +41,11 @@ async function controller(command) {
 
     if (!is_arguments_valid({ command: cmd, args: formattedArgs })) {
       console.log("Invalid input: incorrect number of arguments");
-    } else {
-      await service({ command: cmd, args: formattedArgs });
+
+      return;
     }
+
+    await service({ command: cmd, args: formattedArgs });
   } catch (error) {
     console.log("Operation failed");
   }

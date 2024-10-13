@@ -29,6 +29,7 @@ const ARGS_CORRECT_NUMBER = {
   [COMMANDS.mv]: 2,
   [COMMANDS.compress]: 2,
   [COMMANDS.decompress]: 2,
+  [COMMANDS.exit]: 0,
 };
 
 export { COMMANDS, ARGS_CORRECT_NUMBER };
