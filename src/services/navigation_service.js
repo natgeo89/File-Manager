@@ -28,19 +28,8 @@ function get_current_dir() {
   return CURRENT_DIRECTORY;
 }
 
-function go_up() {
-  const current_dirr = get_current_dir();
-  const upper_dir = current_dirr.split(path.sep);
-
-  if (upper_dir.length === 1) return;
-
-  upper_dir.pop();
-
-  if (upper_dir.length === 1) {
-    CURRENT_DIRECTORY = `${upper_dir[0]}${path.sep}`;
-  } else {
-    CURRENT_DIRECTORY = path.join(...upper_dir);
-  }
+async function go_up() {
+  await go_to_dir(['..'])
 }
 
 /**
