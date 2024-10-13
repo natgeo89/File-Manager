@@ -38,18 +38,24 @@ async function read_file(path_to_file) {
 
     const stat = await fsPromises.stat(read_file_path);
 
-    if (stat.isFile()) {
-      const readable_stream = createReadStream(read_file_path, "utf-8");
-
-      readable_stream.on("data", (chunk) => {
-        process.stdout.write(`${chunk}\n`);
-      });
-    }
-
     if (stat.isDirectory()) {
       console.log(
         "Operation failed. You pass directory instead of file to read"
       );
+    }
+
+    if (stat.isFile()) {
+      await new Promise((resolve) => {
+        const readable_stream = createReadStream(read_file_path, "utf-8");
+
+        readable_stream
+          .on("data", (chunk) => {
+            process.stdout.write(`${chunk}\n`);
+          })
+          .on("end", () => {
+            resolve();
+          });
+      });
     }
   } catch (error) {
     console.log("Operation failed. No such file");
@@ -104,8 +110,13 @@ async function rename_file(path_to_file, new_filename) {
 /**
  * @param {string} path_to_file
  * @param {string} path_to_new_directory
+ * @param {boolean} [add_copy_prefix=true]
  */
-async function copy_file(path_to_file, path_to_new_directory) {
+async function copy_file(
+  path_to_file,
+  path_to_new_directory,
+  add_copy_prefix = true
+) {
   try {
     const current_dirr = get_current_dir();
     const file_path = path.resolve(current_dirr, path_to_file);
@@ -113,7 +124,7 @@ async function copy_file(path_to_file, path_to_new_directory) {
     const destination_path = path.resolve(
       current_dirr,
       path_to_new_directory,
-      file_name
+      `${add_copy_prefix ? "copy_" : ""}${file_name}`
     );
 
     const stat = await fsPromises.stat(file_path);
@@ -153,7 +164,7 @@ async function delete_file(path_to_file) {
  */
 async function move_file(path_to_file, path_to_new_directory) {
   try {
-    await copy_file(path_to_file, path_to_new_directory);
+    await copy_file(path_to_file, path_to_new_directory, false);
     await delete_file(path_to_file);
   } catch (err) {
     console.log("Operation failed");
