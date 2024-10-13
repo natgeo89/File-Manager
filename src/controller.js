@@ -3,6 +3,7 @@ import { navigation_service } from "./services/navigation_service.js";
 import { fs_service } from "./services/fs_service.js";
 import { ARGS_CORRECT_NUMBER, COMMANDS } from "./constants.js";
 import { hash_service } from "./services/hash_service.js";
+import { zlib_service } from "./services/zlib_service.js";
 
 const SERVICES = {
   [COMMANDS.up]: navigation_service,
@@ -16,8 +17,8 @@ const SERVICES = {
   [COMMANDS.rm]: fs_service,
   [COMMANDS.os]: os_service,
   [COMMANDS.hash]: hash_service,
-  [COMMANDS.compress]: "compress",
-  [COMMANDS.decompress]: "decompress",
+  [COMMANDS.compress]: zlib_service,
+  [COMMANDS.decompress]: zlib_service,
   [COMMANDS.exit]: "exit",
 };
 

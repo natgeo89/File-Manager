@@ -4,10 +4,6 @@ import fsPromises from "node:fs/promises";
 import { COMMANDS } from "../constants.js";
 
 let CURRENT_DIRECTORY = homedir();
-//todo remove commented
-// let CURRENT_DIRECTORY = 'D:\\NodeJS\\File-Manager';
-// let CURRENT_DIRECTORY = 'D:\\';
-
 
 const NAVIGATION_SERVICE_COMMANDS = {
   [COMMANDS.up]: go_up,
