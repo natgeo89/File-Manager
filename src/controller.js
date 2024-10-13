@@ -1,21 +1,23 @@
 import { os_service } from "./services/os_service.js";
 import { navigation_service } from "./services/navigation_service.js";
+import { fs_service } from "./services/fs_service.js";
 import { ARGS_CORRECT_NUMBER, COMMANDS } from "./constants.js";
 
 const SERVICES = {
   [COMMANDS.up]: navigation_service,
   [COMMANDS.cd]: navigation_service,
   [COMMANDS.ls]: navigation_service,
-  [COMMANDS.cat]: "cat",
-  [COMMANDS.add]: "add",
-  [COMMANDS.rn]: "rn",
-  [COMMANDS.cp]: "cp",
-  [COMMANDS.mv]: "mv",
-  [COMMANDS.rm]: "rm",
+  [COMMANDS.cat]: fs_service,
+  [COMMANDS.add]: fs_service,
+  [COMMANDS.rn]: fs_service,
+  [COMMANDS.cp]: fs_service,
+  [COMMANDS.mv]: fs_service,
+  [COMMANDS.rm]: fs_service,
   [COMMANDS.os]: os_service,
   [COMMANDS.hash]: "hash",
   [COMMANDS.compress]: "compress",
   [COMMANDS.decompress]: "decompress",
+  [COMMANDS.exit]: "exit",
 };
 
 /**

@@ -18,7 +18,7 @@ function greetings() {
 
 function registerEvents() {
   rl.on("line", async (command) => {
-    if (command === COMMANDS.exit) {
+    if (command.trim() === COMMANDS.exit) {
       rl.emit("SIGINT");
     } else {
       await controller(command);

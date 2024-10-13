@@ -1,11 +1,12 @@
 import { homedir } from "node:os";
 import path from "node:path";
-import fs from "node:fs/promises";
+import fsPromises from "node:fs/promises";
 import { COMMANDS } from "../constants.js";
 
 let CURRENT_DIRECTORY = homedir();
 //todo remove commented
 // let CURRENT_DIRECTORY = 'D:\\NodeJS\\File-Manager';
+// let CURRENT_DIRECTORY = 'D:\\';
 
 
 const NAVIGATION_SERVICE_COMMANDS = {
@@ -22,7 +23,7 @@ const NAVIGATION_SERVICE_COMMANDS = {
 async function navigation_service({ command, args }) {
   const util = NAVIGATION_SERVICE_COMMANDS[command];
 
-  await util(args);
+  await util(...args);
 }
 
 function get_current_dir() {
@@ -30,42 +31,40 @@ function get_current_dir() {
 }
 
 async function go_up() {
-  await go_to_dir(['..'])
+  await go_to_dir('..')
 }
 
 /**
  * 
- * @param {Array<string>} args 
+ * @param {string} path_to_directory 
  */
-async function go_to_dir(args) {
+async function go_to_dir(path_to_directory) {
   try {
-    const [user_path] = args;
     const current_dirr = get_current_dir();
     
-    const absolutePath = path.resolve(current_dirr, user_path);
+    const absolute_path = path.resolve(current_dirr, path_to_directory);
 
-    const stat = await fs.stat(absolutePath);
+    const stat = await fsPromises.stat(absolute_path);
 
     if (stat.isDirectory()) {
-      CURRENT_DIRECTORY = absolutePath;
+      CURRENT_DIRECTORY = absolute_path;
     }
   } catch (error) {
     console.log("Operation failed. Incorrect path");
   }
-
 }
 
 async function get_list_of_files() {
   try {
     const current_dirr = get_current_dir();
 
-    const files_list = await fs.readdir(current_dirr, { withFileTypes: true });
+    const files_list = await fsPromises.readdir(current_dirr, { withFileTypes: true });
 
     const files_stats_promise = files_list.map((file) => {
       const path_to_file = path.join(current_dirr, file.name);
 
       const promise = new Promise((resolve, reject) => {
-        fs.stat(path_to_file)
+        fsPromises.stat(path_to_file)
           .then((stat) => resolve({ stat, fileName: file.name }))
           .catch(reject);
       });
